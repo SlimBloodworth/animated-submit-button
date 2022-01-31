@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --compact-animation-time: 500ms;
+    --progress-bar-animation-time: 1000ms;
+    --circle-animation-time: 300ms;
+    --checkmark-animation-time: 300ms;
+    --btn-width: 125px;
+    --btn-height: 40px;
+}
+
+body {
+    background-color: #1D1F20;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+
+/*Button base*/
+
+.btn {
+    position: relative;
+    background-color: #2B2D2F;
+    color: #71dfbe;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    border-radius: .125em;
+    width: var(--btn-width);
+    height: var(--btn-height);
+    padding: 0;
+    cursor: pointer;
+}
+
+
+/*.hide is class targeted in js*/
+
+.btn.hide {
+    background-color: transparent;
+    color: transparent;
+    user-select: none;
+    cursor: default;
+    animation: vanish 0ms calc(var(--compact-animation-time) + var(--progress-bar-animation-time)) forwards;
+}
+
+
+/*Makes duplicate Button to fit exactly inside of button to hide text*/
+
+.btn::before {
+    content: "";
+    display: none;
+    position: absolute;
+    background-color: #2B2D2F;
+    /*min-width: 100%;
+    min-height: 100%; <-- wouldn't show*/
+    inset: 0;
+    border-radius: .125em;
+    animation: compact var(--compact-animation-time) cubic-bezier(0.26, 0.6, 0.46, 1.7);
+    animation-fill-mode: forwards;
+}
+
+.btn::after {
+    content: "";
+    display: none;
+    position: absolute;
+    background-color: #4B4D4F;
+    /* inset: 0; */
+    /*  51% makes that line in the middle of the bar disappear  */
+    left: 51%;
+    right: 51%;
+    top: 45%;
+    bottom: 45%;
+    border-radius: .25em;
+    /* creates a delay*/
+    animation: progress var(--progress-bar-animation-time) var(--compact-animation-time);
+    /* -so the keyframes at 100% stay on the animation- */
+    animation-fill-mode: forwards;
+}
+
+.btn.hide::before,
+.btn.hide::after {
+    display: block;
+}
+
+.btn.hide+.checkmark-container {
+    /* display: none;  */
+    background-color: #2B2D2F;
+    border-radius: .25em;
+    /* width: calc(var(--btn-width) * 1.50);
+    height: calc(var(--btn-height) * .1); */
+    width: 0;
+    height: 0;
+    animation: circle var(--circle-animation-time) calc(var(--compact-animation-time) + var(--progress-bar-animation-time)) forwards cubic-bezier(0.26, 0.6, 0.46, 1.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* .checkmark-container {
+    background-color: #71dfbe;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+
+/* animate stroke of checkmark*/
+
+.btn.hide+.checkmark-container .checkmark-svg {
+    stroke: white;
+    width: 20px;
+    stroke-dashoffset: 40.84104919433594;
+    stroke-dasharray: 40.84104919433594;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2px;
+    animation: checkmark var(--checkmark-animation-time) calc(var(--compact-animation-time) + var(--progress-bar-animation-time) + var(--circle-animation-time)) forwards;
+}
+
+@keyframes compact {
+    100% {
+        left: -25%;
+        right: -25%;
+        top: 45%;
+        bottom: 45%;
+        border-radius: .25em;
+    }
+}
+
+@keyframes progress {
+    100% {
+        left: -25%;
+        right: -25%;
+        /* top: 45%;
+        bottom: 45%;
+        border-radius: .25em; */
+    }
+}
+
+@keyframes vanish {
+    100% {
+        width: 0;
+        height: 0;
+        /* padding: 0;
+        margin: 0; */
+    }
+}
+
+@keyframes circle {
+    0% {
+        width: calc(var(--btn-width) * 1.50);
+        height: calc(var(--btn-height) * .1);
+    }
+    100% {
+        background-color: #71dfbe;
+        width: 45px;
+        height: 45px;
+        border-radius: 100%;
+    }
+}
+
+@keyframes checkmark {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
