@@ -49,7 +49,7 @@ Users should be able to:
 
 ### What I learned
 
-I really liked learing about animation-fill-mode and how to find and use the timinmg curve animation in dev tools! Super helpful!
+I really liked learing about animation-fill-mode and how to find and use the timing curve animation in dev tools! Super helpful!
 
 ### Continued development
 
